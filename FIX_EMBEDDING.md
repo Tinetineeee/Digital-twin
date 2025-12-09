@@ -23,7 +23,7 @@ Replace your current `.env.local` with:
 ```
 UPSTASH_VECTOR_REST_URL="https://your-new-url"
 UPSTASH_VECTOR_REST_TOKEN="your-new-token"
-GROQ_API_KEY="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"
+GROQ_API_KEY="<your-groq-api-key>"
 NEXT_PUBLIC_PROFILE_SOURCE="digitaltwin.json"
 ```
 

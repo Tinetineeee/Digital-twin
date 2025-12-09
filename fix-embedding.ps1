@@ -31,7 +31,7 @@ if ([string]::IsNullOrWhiteSpace($endpoint) -or [string]::IsNullOrWhiteSpace($to
 
 # Step 3: Update .env.local
 $envLocalPath = ".\.env.local"
-$groqKey = "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"
+$groqKey = "<your-groq-api-key>"
 
 $envContent = @"
 # Upstash Vector Database (NEW INDEX WITH EMBEDDINGS ENABLED)
