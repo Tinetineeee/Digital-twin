@@ -53,7 +53,7 @@ UPSTASH_VECTOR_REST_URL="$endpoint"
 UPSTASH_VECTOR_REST_TOKEN="$readToken"
 
 # Groq API Configuration
-GROQ_API_KEY=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
+GROQ_API_KEY=<your-groq-api-key>
 
 # Profile Data Source
 NEXT_PUBLIC_PROFILE_SOURCE=digitaltwin.json

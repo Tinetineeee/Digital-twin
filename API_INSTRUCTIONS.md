@@ -58,7 +58,7 @@ Once you get the response, update `.env.local`:
 ```env
 UPSTASH_VECTOR_REST_URL="https://your-endpoint-vector.upstash.io"
 UPSTASH_VECTOR_REST_TOKEN="your-read-only-token"
-GROQ_API_KEY=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
+GROQ_API_KEY=<your-groq-api-key>
 NEXT_PUBLIC_PROFILE_SOURCE=digitaltwin.json
 ```
 

@@ -29,7 +29,7 @@ Edit `.env.local` and replace the placeholders:
 ```env
 UPSTASH_VECTOR_REST_URL="<paste-your-url-here>"
 UPSTASH_VECTOR_REST_TOKEN="<paste-your-token-here>"
-GROQ_API_KEY="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"
+GROQ_API_KEY="<your-groq-api-key>"
 ```
 
 ### Step 5: Restart Development Server
