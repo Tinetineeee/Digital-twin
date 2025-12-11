@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CCQo Bot",
+  title: "Tine's BOT",
   description: "AI Digital Twin - Christine Comittan",
 };
 
