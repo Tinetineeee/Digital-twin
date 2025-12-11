@@ -36,7 +36,7 @@ const profileData = {
     degree: "Bachelor of Science in Information Technology",
     graduation_year: 2026,
     relevant_coursework: ["Database Management Systems", "SQL Programming", "Data Structures", "Advanced Database Design"],
-    thesis_project: "Intelligent Student Performance Database System with Analytics Dashboard"
+    thesis_project: "Good Moral Monitoring and Application with Decision Support"
   },
   projects_portfolio: [
     {
