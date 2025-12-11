@@ -4,6 +4,65 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 })
 
+// Embedded profile data - no need to fetch from HTTP
+const profileData = {
+  personal: {
+    name: "Christine Comittan",
+    title: "Certified Database Administrator & Data Management Specialist",
+    location: "Saint Paul University Philippines",
+    summary: "I am a passionate and certified database administrator with expertise in designing, implementing, and managing robust data solutions. With strong proficiency in SQL, database optimization, and data architecture, I specialize in creating efficient database systems that drive business intelligence and support organizational growth.",
+    elevator_pitch: "I am passionate about managing and organizing data in ways that empower organizations to make better decisions. With my expertise in database administration and SQL, I can design efficient database systems that scale with your business needs.",
+    contact: {
+      email: "christine.comittan@spup.edu.ph",
+      linkedin: "https://linkedin.com/in/christinecomittan",
+      github: "https://github.com/christinecomittan"
+    }
+  },
+  skills: {
+    technical: {
+      programming_languages: [
+        { language: "SQL", years: 4, proficiency: "Expert", specialization: "Query Writing, Optimization, Complex Joins" },
+        { language: "Python", years: 2, proficiency: "Advanced", specialization: "Data Analysis, Database Integration" },
+        { language: "T-SQL", years: 3, proficiency: "Advanced", specialization: "Stored Procedures, Triggers" }
+      ],
+      database_systems: ["MySQL", "PostgreSQL", "SQL Server", "Oracle Database", "MongoDB"],
+      database_specialties: ["Database Design", "Query Optimization", "Indexing Strategies", "Backup and Recovery", "Database Security", "Performance Tuning", "Data Migration"]
+    },
+    soft_skills: ["Problem-solving", "Analytical Thinking", "Attention to Detail", "Collaboration", "Documentation", "Project Management", "Communication"],
+    certifications: ["Certified Database Administrator", "SQL Certification", "Data Management Professional"]
+  },
+  education: {
+    university: "Saint Paul University Philippines",
+    degree: "Bachelor of Science in Information Technology",
+    graduation_year: 2026,
+    relevant_coursework: ["Database Management Systems", "SQL Programming", "Data Structures", "Advanced Database Design"],
+    thesis_project: "Intelligent Student Performance Database System with Analytics Dashboard"
+  },
+  projects_portfolio: [
+    {
+      name: "Student Performance Database System",
+      description: "Enterprise-grade database system for managing student records, performance metrics, and academic analytics with real-time reporting capabilities.",
+      technologies: ["SQL", "PostgreSQL", "Python", "Data Visualization"],
+      impact: "Improved academic decision-making with 95% query performance improvement through strategic indexing",
+      github_url: "https://github.com/christinecomittan/student-performance-db",
+      live_demo: "https://student-db-analytics.vercel.app"
+    },
+    {
+      name: "E-Commerce Database Architecture",
+      description: "Designed and optimized normalized database schema for high-traffic e-commerce platform handling 10K+ concurrent users.",
+      technologies: ["MySQL", "SQL Optimization", "Database Design", "Replication"],
+      impact: "Reduced query execution time by 60% and implemented automated backup solutions",
+      github_url: "https://github.com/christinecomittan/ecommerce-db"
+    }
+  ],
+  career_goals: {
+    short_term: "Senior Database Administrator or Database Engineer at a forward-thinking technology company",
+    long_term: "Database Architect or Head of Data Engineering at an enterprise organization",
+    learning_focus: ["Advanced query optimization", "Cloud database platforms", "Machine learning integration with databases", "Big Data technologies"],
+    industries_interested: ["FinTech", "Healthcare IT", "E-commerce", "Data Analytics", "Cloud Services"]
+  }
+}
+
 interface StoredChunk {
   id: string
   title: string
@@ -62,37 +121,13 @@ function expandQuery(query: string): string {
 
 export async function initializeVectorDatabase() {
   try {
-    console.log('Initializing vector database...')
-    
-    let profileData
-    
-    // Fetch from public URL (works reliably on Vercel)
-    try {
-      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-      const host = process.env.VERCEL_URL || 'localhost:3000'
-      const baseUrl = `${protocol}://${host}`
-      
-      console.log(`Fetching from: ${baseUrl}/digitaltwin.json`)
-      const response = await fetch(`${baseUrl}/digitaltwin.json`, { 
-        cache: 'no-store',
-      })
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-      }
-      
-      profileData = await response.json()
-      console.log('Successfully loaded profile from HTTP')
-    } catch (err) {
-      console.error('Failed to fetch profile:', err)
-      throw new Error(`Could not load digitaltwin.json: ${err instanceof Error ? err.message : String(err)}`)
-    }
+    console.log('Initializing vector database from embedded profile data...')
     
     if (!profileData) {
-      throw new Error('Profile data is empty or invalid')
+      throw new Error('Profile data is not available')
     }
 
-    // Create chunks
+    // Create chunks from embedded data
     const chunks = createContentChunks(profileData)
     
     // Prepare chunks for vector database
