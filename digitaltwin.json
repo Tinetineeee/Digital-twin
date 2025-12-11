@@ -1,119 +1,57 @@
 {
   "personal": {
-    "name": "Jhon Danver C. Abogado",
-    "title": "Certified HTML and CSS Developer",
-    "location": "Solana, Cagayan",
-    "summary": "Design here, design there, design everywhere! I am a passionate and certified HTML and CSS developer with a knack for creating visually stunning and user-friendly web interfaces. With a strong foundation in web design principles and a keen eye for detail, I specialize in transforming ideas into captivating digital experiences. My expertise lies in crafting responsive layouts, optimizing user interactions, and ensuring seamless cross-browser compatibility. I thrive in collaborative environments, working closely with designers and developers to bring concepts to life. Whether it's building sleek landing pages or complex web applications, I am dedicated to delivering high-quality code that not only meets but exceeds client expectations. Let's connect and explore how I can contribute to your next web development project!",
-    "elevator_pitch": "I like to design things that make people's lives easier and more enjoyable. With my skills in HTML and CSS, I can create beautiful and functional web pages that provide a great user experience. I'm passionate about staying up-to-date with the latest design trends and technologies, and I'm always looking for new ways to improve my craft. Whether it's working on a small personal project or collaborating with a team on a large-scale website, I bring creativity, attention to detail, and a strong work ethic to every project I take on.",
+    "name": "Christine Comittan",
+    "title": "Certified Database Administrator & Data Management Specialist",
+    "location": "Saint Paul University Philippines",
+    "summary": "I am a passionate and certified database administrator with expertise in designing, implementing, and managing robust data solutions. With strong proficiency in SQL, database optimization, and data architecture, I specialize in creating efficient database systems that drive business intelligence and support organizational growth.",
+    "elevator_pitch": "I am passionate about managing and organizing data in ways that empower organizations to make better decisions. With my expertise in database administration and SQL, I can design efficient database systems that scale with your business needs.",
     "contact": {
-      "email": "jhonabogado@spup.edu.ph",
-      "linkedin": "https://linkedin.com/in/yourprofile",
-      "github": "https://github.com/jedeee-ei"
+      "email": "christine.comittan@spup.edu.ph",
+      "linkedin": "https://linkedin.com/in/christinecomittan",
+      "github": "https://github.com/christinecomittan"
     }
   },
-  "experience": [
-    {
-      "company": "TechCorp Australia",
-      "title": "Senior Software Engineer",
-      "duration": "Jan 2021 - Present (3.5 years)",
-      "company_context": "200+ employee fintech startup, Series B funding",
-      "team_structure": "Engineering team of 25, direct reports: 3 junior developers",
-      "achievements_star": [
-        {
-          "situation": "Legacy monolith causing 3-second page load times affecting user retention",
-          "task": "Lead architectural redesign to improve performance",
-          "action": "Implemented microservices architecture using Docker, Kubernetes, and Redis caching",
-          "result": "Reduced load times by 40% to 1.8s, increased user retention by 15%, saved $50K annually in server costs"
-        }
-      ],
-      "technical_skills_used": ["Python", "AWS (EC2, RDS, S3)", "Docker", "Kubernetes", "PostgreSQL"],
-      "leadership_examples": ["Mentored 3 junior developers", "Led code review processes", "Coordinated with product and design teams"],
-      "budget_managed": "$300K annual infrastructure budget",
-      "team_size_managed": 5
-    }
-  ],
   "skills": {
     "technical": {
       "programming_languages": [
-        {"language": "HTML", "years": 3, "proficiency": "Expert", "specialization": "Semantic HTML, Accessibility"},
-        {"language": "CSS", "years": 3, "proficiency": "Expert", "specialization": ["Responsive Design", "Flexbox", "Grid", "Animations"]}
+        {"language": "SQL", "years": 4, "proficiency": "Expert", "specialization": "Query Writing, Optimization, Complex Joins"},
+        {"language": "Python", "years": 2, "proficiency": "Advanced", "specialization": "Data Analysis, Database Integration"},
+        {"language": "T-SQL", "years": 3, "proficiency": "Advanced", "specialization": "Stored Procedures, Triggers"}
       ],
-      "design_tools": ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Canva"],
-      "web_technologies": ["Bootstrap", "Tailwind CSS", "SASS/SCSS", "Cross-browser compatibility"],
-      "design_specialties": ["Responsive Web Design", "UI/UX Design", "Poster Design", "Graphic Design", "Visual Communication"]
+      "database_systems": ["MySQL", "PostgreSQL", "SQL Server", "Oracle Database", "MongoDB"],
+      "database_specialties": ["Database Design", "Query Optimization", "Indexing Strategies", "Backup and Recovery", "Database Security", "Performance Tuning", "Data Migration"]
     },
-    "soft_skills": ["Creative Problem-solving", "Attention to Detail", "User-centric Design", "Collaboration", "Visual Communication"],
-    "certifications": ["Certified HTML and CSS Developer"]
+    "soft_skills": ["Problem-solving", "Analytical Thinking", "Attention to Detail", "Collaboration", "Documentation", "Project Management", "Communication"],
+    "certifications": ["Certified Database Administrator", "SQL Certification", "Data Management Professional"]
   },
   "education": {
     "university": "Saint Paul University Philippines",
     "degree": "Bachelor of Science in Information Technology",
     "graduation_year": 2026,
-    "relevant_coursework": ["HTML & CSS", "Adobe Photoshop", "UI/UX Design", "Poster Design/Graphic Design"],
-    "thesis_project": "Scholarship Monitoring System with Data Analytics"
+    "relevant_coursework": ["Database Management Systems", "SQL Programming", "Data Structures", "Advanced Database Design"],
+    "thesis_project": "Intelligent Student Performance Database System with Analytics Dashboard"
   },
   "projects_portfolio": [
     {
-      "name": "Scholarship Monitoring System with Data Analytics",
-      "description": "Comprehensive system for tracking and analyzing scholarship distributions and student performance metrics",
-      "technologies": ["HTML", "CSS", "JavaScript", "Data Analytics"],
-      "impact": "Streamlined scholarship management process and provided data-driven insights for academic institutions",
-      "github_url": "https://github.com/jedeee-ei/scholarship-monitoring",
-      "live_demo": "https://scholarship-monitoring.vercel.app"
+      "name": "Student Performance Database System",
+      "description": "Enterprise-grade database system for managing student records, performance metrics, and academic analytics with real-time reporting capabilities.",
+      "technologies": ["SQL", "PostgreSQL", "Python", "Data Visualization"],
+      "impact": "Improved academic decision-making with 95% query performance improvement through strategic indexing",
+      "github_url": "https://github.com/christinecomittan/student-performance-db",
+      "live_demo": "https://student-db-analytics.vercel.app"
+    },
+    {
+      "name": "E-Commerce Database Architecture",
+      "description": "Designed and optimized normalized database schema for high-traffic e-commerce platform handling 10K+ concurrent users.",
+      "technologies": ["MySQL", "SQL Optimization", "Database Design", "Replication"],
+      "impact": "Reduced query execution time by 60% and implemented automated backup solutions",
+      "github_url": "https://github.com/christinecomittan/ecommerce-db"
     }
   ],
   "career_goals": {
-    "short_term": "Senior UI/UX Designer or Front-end Developer at innovative tech company",
-    "long_term": "Design Lead or Head of Creative at a design-focused organization",
-    "learning_focus": ["Advanced UI/UX principles", "JavaScript frameworks", "Web accessibility", "Design systems"],
-    "industries_interested": ["Tech Startups", "Creative Agencies", "SaaS", "E-commerce"]
-  },
-  "interview_prep": {
-    "common_questions": {
-      "behavioral": [
-        "Tell me about a design project where you had to balance aesthetics with functionality",
-        "Describe a time you received design feedback and how you incorporated it",
-        "How do you handle tight deadlines while maintaining design quality?"
-      ],
-      "technical": [
-        "Walk me through your approach to creating responsive web designs",
-        "How would you optimize a website for cross-browser compatibility?",
-        "Explain your experience with CSS Grid and Flexbox layouts"
-      ],
-      "situational": [
-        "A client requests a major design change after you've completed the project. How do you respond?",
-        "How would you approach designing for users with different accessibility needs?",
-        "Describe how you would evaluate and implement a new design trend in your work"
-      ],
-      "company_research": {
-        "research_areas": ["Company mission and values", "Recent product launches", "Engineering culture", "Technical challenges"],
-        "preparation_questions": ["What excites you about our product?", "Why do you want to work here?", "What questions do you have for us?"]
-      }
-    },
-    "weakness_mitigation": [
-      {
-        "weakness": "Limited experience with JavaScript frameworks",
-        "mitigation": "Currently learning React, have strong foundation in vanilla JavaScript and DOM manipulation"
-      }
-    ]
-  },
-  "professional_development": {
-    "recent_learning": ["Advanced CSS animations", "Web accessibility (WCAG)", "Figma prototyping", "JavaScript fundamentals"],
-    "conferences_attended": ["Design Week 2024", "Web Summit Philippines 2024"],
-    "publications": ["Blog post: Creating Responsive Designs with CSS Grid", "Design tips for beginner web developers"],
-    "open_source": ["Contributor to HTML/CSS web design resources", "Open-source UI component library contributor"]
-  },
-  "search": {
-    "enabled": true,
-    "provider": "upstash",
-    "vector_retrieval": {
-      "enabled": true,
-      "url": "https://your-upstash-vector-url",
-      "token": "your-upstash-vector-token"
-    },
-    "groq_integration": {
-      "enabled": true,
-      "api_key": "your-groq-api-key"
-    }
+    "short_term": "Senior Database Administrator or Database Engineer at a forward-thinking technology company",
+    "long_term": "Database Architect or Head of Data Engineering at an enterprise organization",
+    "learning_focus": ["Advanced query optimization", "Cloud database platforms", "Machine learning integration with databases", "Big Data technologies"],
+    "industries_interested": ["FinTech", "Healthcare IT", "E-commerce", "Data Analytics", "Cloud Services"]
   }
 }

@@ -98,6 +98,22 @@ function createContentChunks(
   // Personal info
   if (profileData.personal) {
     chunks.push({
+      id: 'name',
+      title: 'Name and Title',
+      content: `My name is ${profileData.personal.name}. I am a ${profileData.personal.title}.`,
+      type: 'personal',
+    })
+
+    if (profileData.personal.location) {
+      chunks.push({
+        id: 'location',
+        title: 'Location',
+        content: `I am based in ${profileData.personal.location}.`,
+        type: 'personal',
+      })
+    }
+
+    chunks.push({
       id: 'summary',
       title: 'Professional Summary',
       content: profileData.personal.summary || '',
@@ -109,6 +125,22 @@ function createContentChunks(
       content: profileData.personal.elevator_pitch || '',
       type: 'personal',
     })
+
+    // Contact information
+    if (profileData.personal.contact) {
+      chunks.push({
+        id: 'contact',
+        title: 'Contact Information',
+        content: `You can reach me at ${profileData.personal.contact.email}. My LinkedIn is ${profileData.personal.contact.linkedin} and my GitHub is ${profileData.personal.contact.github}.`,
+        type: 'personal',
+      })
+      chunks.push({
+        id: 'email',
+        title: 'Email',
+        content: `My email address is ${profileData.personal.contact.email}.`,
+        type: 'personal',
+      })
+    }
   }
 
   // Skills
@@ -181,9 +213,9 @@ function createContentChunks(
 
 export async function searchProfile(question: string) {
   try {
-    if (vectorDatabase.length === 0) {
-      await initializeVectorDatabase()
-    }
+    // Always reinitialize to get fresh data
+    vectorDatabase = []
+    await initializeVectorDatabase()
 
     // Expand query with synonyms for better matching
     const expandedQuestion = expandQuery(question)
@@ -235,14 +267,14 @@ export async function searchProfile(question: string) {
     }
 
     // Generate response with Groq
-    const prompt = `You are Jhon Danver, an AI digital twin. Answer the user's question in first person, based on your background and experience. Be conversational and helpful.
+    const prompt = `You are Christine Comittan, an AI digital twin. Answer the user's question in first person, naturally and conversationally.
 
 Your Information:
 ${context}
 
 User Question: ${question}
 
-Answer in a natural, first-person way:`
+Answer in 2-3 sentences, being specific and helpful. Sound natural and personable.`
 
     const completion = await groq.chat.completions.create({
       model: 'llama-3.1-8b-instant',
@@ -250,7 +282,7 @@ Answer in a natural, first-person way:`
         {
           role: 'system',
           content:
-            'You are an AI digital twin representing Jhon Danver. Answer questions about yourself in first person. Be personable and professional.',
+            'You are Christine Comittan, a database professional. Answer questions about yourself in first person, conversationally and naturally. Be helpful, specific, and personable. Do NOT use any HTML, markdown, or special formatting. Just plain text.',
         },
         {
           role: 'user',
@@ -258,10 +290,12 @@ Answer in a natural, first-person way:`
         },
       ],
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 200,
     })
 
-    const answer = completion.choices[0]?.message?.content || 'Unable to generate response'
+    let answer = completion.choices[0]?.message?.content || 'Unable to generate response'
+    // Remove any HTML/markdown formatting
+    answer = answer.replace(/<[^>]*>/g, '').replace(/\*\*/g, '').replace(/\*/g, '').trim()
 
     return {
       answer,

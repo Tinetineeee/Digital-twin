@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { X, Send, Loader } from 'lucide-react'
+import { X, Send, Loader, Trash2 } from 'lucide-react'
 import { queryDigitalTwin } from '@/app/actions/profile'
 
 interface Message {
@@ -10,16 +10,29 @@ interface Message {
   content: string
 }
 
+const SAMPLE_QUESTIONS = [
+  "What's your name and title?",
+  "How can I contact you?",
+  "What are your main database skills?",
+  "Tell me about your projects",
+  "What are your career goals?",
+  "What's your educational background?",
+]
+
+const STORAGE_KEY = 'christine-chat-history'
+
 export default function ChatDialog({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '0',
       role: 'assistant',
-      content: "Hi! I'm Jhon's AI digital twin. Ask me anything about my skills, experience, projects, or career goals!",
+      content: "Hi! I'm Christine's AI digital twin. Ask me anything about my database expertise, skills, experience, projects, or career goals!",
     },
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showSuggestions, setShowSuggestions] = useState(true)
+  const [showClearConfirm, setShowClearConfirm] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
@@ -29,6 +42,52 @@ export default function ChatDialog({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Load conversation history on mount
+  useEffect(() => {
+    const savedHistory = localStorage.getItem(STORAGE_KEY)
+    if (savedHistory) {
+      try {
+        const history = JSON.parse(savedHistory)
+        if (Array.isArray(history) && history.length > 0) {
+          setMessages(history)
+        }
+      } catch (error) {
+        console.error('Failed to load chat history:', error)
+      }
+    }
+  }, [])
+
+  // Save conversation history whenever messages change
+  useEffect(() => {
+    if (messages.length > 1) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages))
+    }
+  }, [messages])
+
+  const handleClearHistory = () => {
+    setShowClearConfirm(true)
+  }
+
+  const confirmClearHistory = () => {
+    const initialMessage: Message = {
+      id: '0',
+      role: 'assistant',
+      content: "Hi! I'm Christine's AI digital twin. Ask me anything about my database expertise, skills, experience, projects, or career goals!",
+    }
+    setMessages([initialMessage])
+    localStorage.removeItem(STORAGE_KEY)
+    setShowClearConfirm(false)
+  }
+
+  const cancelClearHistory = () => {
+    setShowClearConfirm(false)
+  }
+
+  const handleSampleQuestion = (question: string) => {
+    setInput(question)
+    setShowSuggestions(false)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,6 +101,7 @@ export default function ChatDialog({ onClose }: { onClose: () => void }) {
 
     setMessages((prev) => [...prev, userMessage])
     setInput('')
+    setShowSuggestions(false)
     setLoading(true)
 
     try {
@@ -73,19 +133,28 @@ export default function ChatDialog({ onClose }: { onClose: () => void }) {
       />
 
       {/* Chat Window */}
-      <div className="relative w-full max-w-md h-96 md:h-[32rem] bg-white rounded-xl border border-gray-200 shadow-2xl flex flex-col z-50">
+      <div className="relative w-full max-w-md h-96 md:h-[32rem] bg-white rounded-xl border border-gray-200 shadow-2xl flex flex-col z-10">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
           <div>
-            <h3 className="font-semibold text-gray-900">Jhon's AI Twin</h3>
+            <h3 className="font-semibold text-gray-900">Christine's AI Twin</h3>
             <p className="text-xs text-green-600 font-medium">● Online</p>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition p-1"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleClearHistory}
+              className="text-gray-400 hover:text-red-600 transition p-1"
+              title="Clear chat history"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 transition p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Messages */}
@@ -102,10 +171,27 @@ export default function ChatDialog({ onClose }: { onClose: () => void }) {
                     : 'bg-white text-gray-900 border border-gray-200'
                 }`}
               >
-                <p className="text-sm leading-relaxed">{message.content}</p>
+                <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
               </div>
             </div>
           ))}
+
+          {/* Sample Questions - Show only when there are no user messages yet */}
+          {showSuggestions && messages.length === 1 && (
+            <div className="space-y-2 mt-4">
+              <p className="text-xs text-gray-500 font-medium px-4">Suggested questions:</p>
+              {SAMPLE_QUESTIONS.map((question, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleSampleQuestion(question)}
+                  className="w-full text-left text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 p-2 rounded-lg transition border border-blue-200"
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+          )}
+
           {loading && (
             <div className="flex justify-start">
               <div className="bg-white text-gray-900 rounded-lg px-4 py-2 border border-gray-200">
@@ -138,6 +224,38 @@ export default function ChatDialog({ onClose }: { onClose: () => void }) {
           </button>
         </form>
       </div>
+
+      {/* Clear History Confirmation Modal */}
+      {showClearConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/40" onClick={cancelClearHistory} />
+          <div className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-sm mx-auto z-50" onClick={(e) => e.stopPropagation()}>
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-100 mb-4">
+                <Trash2 className="w-7 h-7 text-red-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Clear Chat History?</h3>
+              <p className="text-sm text-gray-600">
+                This will permanently delete all your previous conversations. This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={cancelClearHistory}
+                className="flex-1 px-4 py-2.5 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmClearHistory}
+                className="flex-1 px-4 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition"
+              >
+                Clear History
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
