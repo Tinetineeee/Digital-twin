@@ -68,40 +68,46 @@ export async function initializeVectorDatabase() {
     
     let profileData
     
-    // Try to fetch from public URL first (works on Vercel)
-    try {
-      const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
-      const response = await fetch(`${baseUrl}/digitaltwin.json`)
-      if (response.ok) {
-        profileData = await response.json()
-        console.log('Loaded profile from public URL')
-      }
-    } catch (err) {
-      console.log('Could not load from public URL, trying file system...')
-    }
+    // Try file system first (more reliable for server-side)
+    const possiblePaths = [
+      path.join(process.cwd(), 'public', 'digitaltwin.json'),
+      path.join(process.cwd(), 'digitaltwin.json'),
+    ]
     
-    // Fallback to file system
-    if (!profileData) {
-      const possiblePaths = [
-        path.join(process.cwd(), 'digitaltwin.json'),
-        path.join(process.cwd(), 'public', 'digitaltwin.json'),
-      ]
-      
-      for (const profilePath of possiblePaths) {
-        try {
-          if (fs.existsSync(profilePath)) {
-            console.log(`Loading profile from: ${profilePath}`)
-            profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
-            break
-          }
-        } catch (err) {
-          console.log(`Could not load from ${profilePath}`)
+    for (const profilePath of possiblePaths) {
+      try {
+        if (fs.existsSync(profilePath)) {
+          console.log(`Loading profile from: ${profilePath}`)
+          profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
+          break
         }
+      } catch (err) {
+        console.log(`Could not load from ${profilePath}:`, err)
+      }
+    }
+    
+    // Fallback to HTTP fetch if file system didn't work
+    if (!profileData) {
+      try {
+        console.log('Trying to fetch from HTTP...')
+        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+        const host = process.env.VERCEL_URL || 'localhost:3000'
+        const baseUrl = `${protocol}://${host}`
+        const response = await fetch(`${baseUrl}/digitaltwin.json`, { 
+          cache: 'no-store',
+          next: { revalidate: 0 }
+        })
+        if (response.ok) {
+          profileData = await response.json()
+          console.log('Loaded profile from HTTP')
+        }
+      } catch (err) {
+        console.log('Could not load from HTTP:', err)
       }
     }
     
     if (!profileData) {
-      throw new Error('digitaltwin.json not found in any expected location')
+      throw new Error('digitaltwin.json not found. Checked: ' + possiblePaths.join(', '))
     }
 
     // Create chunks
@@ -247,9 +253,33 @@ function createContentChunks(
 
 export async function searchProfile(question: string) {
   try {
+    // Validate input
+    if (!question || !question.trim()) {
+      return {
+        answer: "Please ask me a question!",
+        sources: [],
+      }
+    }
+
+    // Check if GROQ API key is configured
+    if (!process.env.GROQ_API_KEY) {
+      console.error('GROQ_API_KEY is not set')
+      return {
+        answer: 'The chat service is not properly configured. Please check the environment variables.',
+        sources: [],
+      }
+    }
+
     // Always reinitialize to get fresh data
     vectorDatabase = []
     await initializeVectorDatabase()
+
+    if (vectorDatabase.length === 0) {
+      return {
+        answer: 'Unable to load my profile data. Please try again later.',
+        sources: [],
+      }
+    }
 
     // Expand query with synonyms for better matching
     const expandedQuestion = expandQuery(question)
