@@ -68,21 +68,35 @@ export async function initializeVectorDatabase() {
     
     let profileData
     
-    // Try multiple paths for compatibility
-    const possiblePaths = [
-      path.join(process.cwd(), 'digitaltwin.json'),
-      path.join(process.cwd(), 'public', 'digitaltwin.json'),
-    ]
+    // Try to fetch from public URL first (works on Vercel)
+    try {
+      const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'
+      const response = await fetch(`${baseUrl}/digitaltwin.json`)
+      if (response.ok) {
+        profileData = await response.json()
+        console.log('Loaded profile from public URL')
+      }
+    } catch (err) {
+      console.log('Could not load from public URL, trying file system...')
+    }
     
-    for (const profilePath of possiblePaths) {
-      try {
-        if (fs.existsSync(profilePath)) {
-          console.log(`Loading profile from: ${profilePath}`)
-          profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
-          break
+    // Fallback to file system
+    if (!profileData) {
+      const possiblePaths = [
+        path.join(process.cwd(), 'digitaltwin.json'),
+        path.join(process.cwd(), 'public', 'digitaltwin.json'),
+      ]
+      
+      for (const profilePath of possiblePaths) {
+        try {
+          if (fs.existsSync(profilePath)) {
+            console.log(`Loading profile from: ${profilePath}`)
+            profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
+            break
+          }
+        } catch (err) {
+          console.log(`Could not load from ${profilePath}`)
         }
-      } catch (err) {
-        console.log(`Could not load from ${profilePath}`)
       }
     }
     
