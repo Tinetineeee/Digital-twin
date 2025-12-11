@@ -66,9 +66,29 @@ export async function initializeVectorDatabase() {
   try {
     console.log('Initializing local vector database...')
     
-    // Load profile data
-    const profilePath = path.join(process.cwd(), 'digitaltwin.json')
-    const profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
+    let profileData
+    
+    // Try multiple paths for compatibility
+    const possiblePaths = [
+      path.join(process.cwd(), 'digitaltwin.json'),
+      path.join(process.cwd(), 'public', 'digitaltwin.json'),
+    ]
+    
+    for (const profilePath of possiblePaths) {
+      try {
+        if (fs.existsSync(profilePath)) {
+          console.log(`Loading profile from: ${profilePath}`)
+          profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
+          break
+        }
+      } catch (err) {
+        console.log(`Could not load from ${profilePath}`)
+      }
+    }
+    
+    if (!profileData) {
+      throw new Error('digitaltwin.json not found in any expected location')
+    }
 
     // Create chunks
     const chunks = createContentChunks(profileData)
