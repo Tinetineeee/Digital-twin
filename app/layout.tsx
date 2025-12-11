@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Tine's BOT",
-  description: "AI Digital Twin - Christine Comittan",
+  description: "AI Digital Twin - Christine Comitan",
 };
 
 export default function RootLayout({

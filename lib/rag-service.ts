@@ -7,15 +7,15 @@ const groq = new Groq({
 // Embedded profile data - no need to fetch from HTTP
 const profileData = {
   personal: {
-    name: "Christine Comittan",
+    name: "Christine Comitan",
     title: "Certified Database Administrator & Data Management Specialist",
     location: "Saint Paul University Philippines",
     summary: "I am a passionate and certified database administrator with expertise in designing, implementing, and managing robust data solutions. With strong proficiency in SQL, database optimization, and data architecture, I specialize in creating efficient database systems that drive business intelligence and support organizational growth.",
     elevator_pitch: "I am passionate about managing and organizing data in ways that empower organizations to make better decisions. With my expertise in database administration and SQL, I can design efficient database systems that scale with your business needs.",
     contact: {
-      email: "christine.comittan@spup.edu.ph",
-      linkedin: "https://linkedin.com/in/christinecomittan",
-      github: "https://github.com/christinecomittan"
+      email: "christine.comitan@spup.edu.ph",
+      linkedin: "https://linkedin.com/in/christinecomitan",
+      github: "https://github.com/christinecomitan"
     }
   },
   skills: {
@@ -44,7 +44,7 @@ const profileData = {
       description: "Enterprise-grade database system for managing student records, performance metrics, and academic analytics with real-time reporting capabilities.",
       technologies: ["SQL", "PostgreSQL", "Python", "Data Visualization"],
       impact: "Improved academic decision-making with 95% query performance improvement through strategic indexing",
-      github_url: "https://github.com/christinecomittan/student-performance-db",
+      github_url: "https://github.com/christinecomitan/student-performance-db",
       live_demo: "https://student-db-analytics.vercel.app"
     },
     {
@@ -52,7 +52,7 @@ const profileData = {
       description: "Designed and optimized normalized database schema for high-traffic e-commerce platform handling 10K+ concurrent users.",
       technologies: ["MySQL", "SQL Optimization", "Database Design", "Replication"],
       impact: "Reduced query execution time by 60% and implemented automated backup solutions",
-      github_url: "https://github.com/christinecomittan/ecommerce-db"
+      github_url: "https://github.com/christinecomitan/ecommerce-db"
     }
   ],
   career_goals: {
@@ -355,7 +355,7 @@ export async function searchProfile(question: string) {
     console.log('Context prepared, calling Groq API')
 
     // Generate response with Groq
-    const prompt = `You are Christine Comittan, an AI digital twin. Answer the user's question in first person, naturally and conversationally.
+    const prompt = `You are Christine Comitan, an AI digital twin. Answer the user's question in first person, naturally and conversationally.
 
 Your Information:
 ${context}
@@ -370,7 +370,7 @@ Answer in 2-3 sentences, being specific and helpful. Sound natural and personabl
         {
           role: 'system',
           content:
-            'You are Christine Comittan, a database professional. Answer questions about yourself in first person, conversationally and naturally. Be helpful, specific, and personable. Do NOT use any HTML, markdown, or special formatting. Just plain text.',
+            'You are Christine Comitan, a database professional. Answer questions about yourself in first person, conversationally and naturally. Be helpful, specific, and personable. Do NOT use any HTML, markdown, or special formatting. Just plain text.',
         },
         {
           role: 'user',
