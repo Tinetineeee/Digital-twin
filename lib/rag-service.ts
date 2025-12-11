@@ -1,6 +1,4 @@
 import { Groq } from 'groq-sdk'
-import fs from 'fs'
-import path from 'path'
 
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
@@ -64,50 +62,34 @@ function expandQuery(query: string): string {
 
 export async function initializeVectorDatabase() {
   try {
-    console.log('Initializing local vector database...')
+    console.log('Initializing vector database...')
     
     let profileData
     
-    // Try file system first (more reliable for server-side)
-    const possiblePaths = [
-      path.join(process.cwd(), 'public', 'digitaltwin.json'),
-      path.join(process.cwd(), 'digitaltwin.json'),
-    ]
-    
-    for (const profilePath of possiblePaths) {
-      try {
-        if (fs.existsSync(profilePath)) {
-          console.log(`Loading profile from: ${profilePath}`)
-          profileData = JSON.parse(fs.readFileSync(profilePath, 'utf-8'))
-          break
-        }
-      } catch (err) {
-        console.log(`Could not load from ${profilePath}:`, err)
+    // Fetch from public URL (works reliably on Vercel)
+    try {
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+      const host = process.env.VERCEL_URL || 'localhost:3000'
+      const baseUrl = `${protocol}://${host}`
+      
+      console.log(`Fetching from: ${baseUrl}/digitaltwin.json`)
+      const response = await fetch(`${baseUrl}/digitaltwin.json`, { 
+        cache: 'no-store',
+      })
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
-    }
-    
-    // Fallback to HTTP fetch if file system didn't work
-    if (!profileData) {
-      try {
-        console.log('Trying to fetch from HTTP...')
-        const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-        const host = process.env.VERCEL_URL || 'localhost:3000'
-        const baseUrl = `${protocol}://${host}`
-        const response = await fetch(`${baseUrl}/digitaltwin.json`, { 
-          cache: 'no-store',
-          next: { revalidate: 0 }
-        })
-        if (response.ok) {
-          profileData = await response.json()
-          console.log('Loaded profile from HTTP')
-        }
-      } catch (err) {
-        console.log('Could not load from HTTP:', err)
-      }
+      
+      profileData = await response.json()
+      console.log('Successfully loaded profile from HTTP')
+    } catch (err) {
+      console.error('Failed to fetch profile:', err)
+      throw new Error(`Could not load digitaltwin.json: ${err instanceof Error ? err.message : String(err)}`)
     }
     
     if (!profileData) {
-      throw new Error('digitaltwin.json not found. Checked: ' + possiblePaths.join(', '))
+      throw new Error('Profile data is empty or invalid')
     }
 
     // Create chunks
