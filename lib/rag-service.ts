@@ -14,7 +14,7 @@ const profileData = {
     elevator_pitch: "I am passionate about managing and organizing data in ways that empower organizations to make better decisions. With my expertise in database administration and SQL, I can design efficient database systems that scale with your business needs.",
     contact: {
       email: "christine.comitan@spup.edu.ph",
-      linkedin: "https://linkedin.com/in/christinecomitan",
+      linkedin: "https://www.linkedin.com/in/tine-comitan-300979389/",
       github: "https://github.com/christinecomitan"
     }
   },
