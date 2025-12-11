@@ -64,7 +64,7 @@ export default function ChatInterface() {
       {/* Header */}
       <div className="border-b border-slate-700 bg-slate-900/50 px-6 py-4 backdrop-blur">
         <h1 className="text-2xl font-bold text-white">
-          🤖 Digital Twin - Jhon Danver
+          🤖 Tine's BOT
         </h1>
         <p className="mt-1 text-sm text-slate-400">
           Ask me about my skills, experience, projects, and career goals
