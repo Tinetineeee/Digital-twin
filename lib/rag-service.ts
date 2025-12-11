@@ -245,23 +245,28 @@ export async function searchProfile(question: string) {
 
     // Check if GROQ API key is configured
     if (!process.env.GROQ_API_KEY) {
-      console.error('GROQ_API_KEY is not set')
+      console.error('GROQ_API_KEY is not set in environment variables')
       return {
-        answer: 'The chat service is not properly configured. Please check the environment variables.',
+        answer: 'The chat service is not configured. Please add the GROQ_API_KEY to your environment variables.',
         sources: [],
       }
     }
+
+    console.log('Starting profile search for question:', question)
 
     // Always reinitialize to get fresh data
     vectorDatabase = []
     await initializeVectorDatabase()
 
     if (vectorDatabase.length === 0) {
+      console.error('Vector database is empty after initialization')
       return {
-        answer: 'Unable to load my profile data. Please try again later.',
+        answer: 'Unable to load my profile data. Please try again.',
         sources: [],
       }
     }
+
+    console.log('Vector database has', vectorDatabase.length, 'chunks')
 
     // Expand query with synonyms for better matching
     const expandedQuestion = expandQuery(question)
@@ -312,6 +317,8 @@ export async function searchProfile(question: string) {
       }
     }
 
+    console.log('Context prepared, calling Groq API')
+
     // Generate response with Groq
     const prompt = `You are Christine Comittan, an AI digital twin. Answer the user's question in first person, naturally and conversationally.
 
@@ -349,8 +356,9 @@ Answer in 2-3 sentences, being specific and helpful. Sound natural and personabl
     }
   } catch (error) {
     console.error('Error in searchProfile:', error)
+    const errorMsg = error instanceof Error ? error.message : String(error)
     return {
-      answer: 'Sorry, I encountered an error processing your question. Please try again.',
+      answer: `Error: ${errorMsg}`,
       sources: [],
     }
   }
