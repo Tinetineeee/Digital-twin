@@ -84,16 +84,16 @@ export default function ChatInterface() {
               </p>
               <div className="space-y-2 text-left max-w-md">
                 <button
-                  onClick={() => setInput("What are your design specialties?")}
+                  onClick={() => setInput("What are your database specialties?")}
                   className="w-full px-4 py-2 text-left text-slate-300 bg-slate-800/50 hover:bg-slate-700 rounded border border-slate-700 transition"
                 >
-                  "What are your design specialties?"
+                  "What are your database specialties?"
                 </button>
                 <button
-                  onClick={() => setInput("Tell me about your education")}
+                  onClick={() => setInput("Tell me about your programming skills")}
                   className="w-full px-4 py-2 text-left text-slate-300 bg-slate-800/50 hover:bg-slate-700 rounded border border-slate-700 transition"
                 >
-                  "Tell me about your education"
+                  "Tell me about your programming skills"
                 </button>
                 <button
                   onClick={() => setInput("What are your career goals?")}
