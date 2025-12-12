@@ -6,9 +6,9 @@
     "summary": "I am a passionate and certified database administrator with expertise in designing, implementing, and managing robust data solutions. With strong proficiency in SQL, database optimization, and data architecture, I specialize in creating efficient database systems that drive business intelligence and support organizational growth.",
     "elevator_pitch": "I am passionate about managing and organizing data in ways that empower organizations to make better decisions. With my expertise in database administration and SQL, I can design efficient database systems that scale with your business needs.",
     "contact": {
-      "email": "christine.comitan@spup.edu.ph",
+      "email": "christinecomitan@spup.edu.ph",
       "linkedin": "https://www.linkedin.com/in/tine-comitan-300979389",
-      "github": "https://github.com/christinecomitan"
+      "github": "https://github.com/Tinetineeee"
     }
   },
   "skills": {
@@ -37,7 +37,7 @@
       "description": "Enterprise-grade database system for managing student records, performance metrics, and academic analytics with real-time reporting capabilities.",
       "technologies": ["SQL", "PostgreSQL", "Python", "Data Visualization"],
       "impact": "Improved academic decision-making with 95% query performance improvement through strategic indexing",
-      "github_url": "https://github.com/christinecomitan/student-performance-db",
+      "github_url": "https://github.com/Tinetineeee/student-performance-db",
       "live_demo": "https://student-db-analytics.vercel.app"
     },
     {
@@ -45,7 +45,7 @@
       "description": "Designed and optimized normalized database schema for high-traffic e-commerce platform handling 10K+ concurrent users.",
       "technologies": ["MySQL", "SQL Optimization", "Database Design", "Replication"],
       "impact": "Reduced query execution time by 60% and implemented automated backup solutions",
-      "github_url": "https://github.com/christinecomitan/ecommerce-db"
+      "github_url": "https://github.com/Tinetineeee/ecommerce-db"
     }
   ],
   "career_goals": {
